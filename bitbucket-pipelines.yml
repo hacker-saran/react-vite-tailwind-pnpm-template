@@ -1,0 +1,42 @@
+image: node:22
+
+definitions:
+  caches:
+    pnpm: $HOME/.local/share/pnpm/store
+
+pipelines:
+  pull-requests:
+    '**':
+      - step:
+          name: Frontend Quality Checks
+
+          caches:
+            - pnpm
+
+          script:
+            - corepack enable
+            - corepack prepare pnpm@10 --activate
+
+            - pnpm install --frozen-lockfile
+
+            - pnpm quality
+
+  branches:
+    develop:
+      - step:
+          name: Develop Branch Validation
+
+          caches:
+            - pnpm
+
+          script:
+            - corepack enable
+            - corepack prepare pnpm@10 --activate
+
+            - pnpm install --frozen-lockfile
+
+            - pnpm format:check
+            - pnpm lint
+            - pnpm typecheck
+            - pnpm test:run
+            - pnpm build

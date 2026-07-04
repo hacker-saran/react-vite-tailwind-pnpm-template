@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+coverage/
+
+# Vite cache
+.vite/
+
+# Git
+.git/
+
+# Logs
+*.log
+
+# Lock files (optional)
+package-lock.json
+yarn.lock
